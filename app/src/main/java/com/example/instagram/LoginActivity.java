@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
+    public static final String TAG = "LoginActivity";
 
     EditText etUsername;
     EditText etPassword;
@@ -45,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (e == null) {
                             Intent i = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(i);
+                        } else {
+                            Log.e(TAG, "Unable to log in");
                         }
                     }
                 });
