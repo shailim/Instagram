@@ -11,7 +11,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_splash_screen);  // no need because showing splash screen from manifest
-        Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
+        Intent i = new Intent(SplashScreenActivity.this, LoginActivity.class);
         startActivity(i);
         finish();
     }
