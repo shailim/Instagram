@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText etUsername;
     EditText etPassword;
-    Button btnSubmit;
+    Button btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +34,9 @@ public class LoginActivity extends AppCompatActivity {
 
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        btnSubmit = findViewById(R.id.btnSubmit);
+        btnLogin = findViewById(R.id.btnLogin);
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = etUsername.getText().toString();

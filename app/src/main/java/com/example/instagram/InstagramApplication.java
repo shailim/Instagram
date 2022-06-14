@@ -12,12 +12,15 @@ public class InstagramApplication extends Application {
     public void onCreate() {
 
         super.onCreate();
+
+        ParseObject.registerSubclass(Post.class);
+
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("jE6WJ8n9Q1HVsUWB3SOSCIYXHlXV3Dh7OFr4nwTM")
-                .clientKey("urhlLBA4jIpwk4ffBSO9a5893OHxYB2G3gmFtEBR")
-                .server("https://parseapi.back4app.com").build());
+                .applicationId(getString(R.string.back4app_app_id))
+                .clientKey(getString(R.string.back4app_client_key))
+                .server(getString(R.string.back4app_server_url)).build());
 
     }
 }
