@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 
 import java.util.List;
@@ -62,7 +63,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
 
         public void bind(Post post) {
             //for each post, we set the data
-            tvUsername.setText(post.getUser().toString());
+            try {
+                // username is only working if i use fetch() ??
+                tvUsername.setText(post.getUser().fetch().getUsername());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             tvCaption.setText(post.getDescription());
             ParseFile image = post.getImage();
             if (image != null) {

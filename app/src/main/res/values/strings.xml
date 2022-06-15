@@ -5,4 +5,5 @@
     <string name="back4app_client_key">urhlLBA4jIpwk4ffBSO9a5893OHxYB2G3gmFtEBR</string>
     <string name="logout_btn_text">Log Out</string>
     <string name="login_btn_text">Log In</string>
+    <string name="signup_btn_text">Sign Up</string>
 </resources>
