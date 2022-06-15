@@ -70,4 +70,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             }
         }
     }
+
+    // clearing all posts from recycler
+    public void clear() {
+        posts.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a new list of posts
+    public void addAll(List<Post> list) {
+        posts.addAll(list);
+        notifyDataSetChanged();
+    }
 }
