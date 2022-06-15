@@ -109,24 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        queryPosts();
-    }
-
-    public void queryPosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (posts != null) {
-                    for (Post post : posts) {
-                        Log.i(TAG, post.getDescription());
-                    }
-                } else {
-                    Log.e(TAG, "Couldn't query posts");
-                }
-            }
-        });
     }
 
     public void savePost(String description, ParseUser user) {
