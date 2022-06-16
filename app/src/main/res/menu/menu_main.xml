@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/miPost"
+        android:icon="@drawable/instagram_new_post_outline_24"
+        app:showAsAction="always"
+        android:title="Post">
+    </item>
+</menu>

@@ -1,6 +1,8 @@
 package com.example.instagram;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -8,6 +10,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -29,6 +33,17 @@ public class FeedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.feedToolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            // Display icon in the toolbar
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setLogo(R.drawable.nav_logo_whiteout);
+        }
 
         // find the recycler view and swipe container
         rvFeed = findViewById(R.id.rvFeed);
@@ -60,7 +75,6 @@ public class FeedActivity extends AppCompatActivity {
         //getting newest posts first
         query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<Post>() {
-            boolean successfulQuery = false;
             @Override
             public void done(List<Post> parsePosts, ParseException e) {
                 if (parsePosts != null) {
@@ -77,5 +91,21 @@ public class FeedActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.miPost) {
+            startActivity(new Intent(FeedActivity.this, MainActivity.class));
+        }
+        return false;
     }
 }

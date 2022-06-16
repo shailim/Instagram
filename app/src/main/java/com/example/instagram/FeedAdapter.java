@@ -52,6 +52,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
         TextView tvUsername;
         ImageView ivPicture;
         TextView tvCaption;
+        String username = "";
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,11 +66,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             //for each post, we set the data
             try {
                 // username is only working if i use fetch() ??
-                tvUsername.setText(post.getUser().fetch().getUsername());
+                username = post.getUser().fetch().getUsername();
+                tvUsername.setText(username);
             } catch (ParseException e) {
                 e.printStackTrace();
+                tvUsername.setText("Loading...");
             }
-            tvCaption.setText(post.getDescription());
+            tvCaption.setText(username + " " + post.getDescription());
             ivPicture.setVisibility(View.GONE);
             ParseFile image = post.getImage();
             if (image != null) {
