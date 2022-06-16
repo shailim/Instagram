@@ -23,6 +23,7 @@ import android.widget.ImageView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         Post post = new Post();
         post.setDescription(description);
         post.setUser(user);
+        post.setImage(new ParseFile(photoFile));
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

@@ -20,10 +20,10 @@ public class FeedActivity extends AppCompatActivity {
 
     public static final String TAG = "FeedActivity";
 
-    RecyclerView rvFeed;
-    List<Post> posts = new ArrayList<>();
-    FeedAdapter adapter;
-    SwipeRefreshLayout swipeContainer;
+    private RecyclerView rvFeed;
+    private List<Post> posts = new ArrayList<>();
+    private FeedAdapter adapter;
+    private SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,48 +42,36 @@ public class FeedActivity extends AppCompatActivity {
         rvFeed.setLayoutManager(new LinearLayoutManager(FeedActivity.this));
 
         //get posts from parse
-        queryPosts();
+        queryPosts(null);
 
         // setting the refresh listener for whenever user pulls down to refresh
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // call query to get posts again
-                ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-                query.setLimit(20);
-                query.addDescendingOrder("createdAt");
-                //async query
-                query.findInBackground(new FindCallback<Post>() {
-                    @Override
-                    public void done(List<Post> posts, ParseException e) {
-                        if (posts != null) {
-                            //if successful, clear posts in adapter and then add the new list of posts
-                            adapter.clear();
-                            adapter.addAll(posts);
-                            // have to notify that it's done refreshing
-                            swipeContainer.setRefreshing(false);
-                        } else {
-                            Log.e(TAG, "Couldn't refresh posts");
-                        }
-                    }
-                });
+                queryPosts(swipeContainer);
             }
         });
     }
 
-    public void queryPosts() {
+    public void queryPosts(SwipeRefreshLayout sw) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         //limit of 20 posts
         query.setLimit(20);
         //getting newest posts first
         query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<Post>() {
+            boolean successfulQuery = false;
             @Override
             public void done(List<Post> parsePosts, ParseException e) {
                 if (parsePosts != null) {
+                    posts.clear();
                     posts.addAll(parsePosts);
                     //post list changed so let adapter know so it can refresh views
                     adapter.notifyDataSetChanged();
+                    // if a swipe container was passed in, set refreshing state to false
+                    if (sw != null) {
+                        sw.setRefreshing(false);
+                    }
                 } else {
                     Log.e(TAG, "Couldn't query posts");
                 }

@@ -32,7 +32,7 @@ public class Post extends ParseObject {
         put(DESCRIPTION, description);
     }
 
-    public void setImage(File image) {
+    public void setImage(ParseFile image) {
         put(IMAGE, image);
     }
 

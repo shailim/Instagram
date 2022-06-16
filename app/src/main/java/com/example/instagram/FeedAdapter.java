@@ -18,8 +18,8 @@ import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
 
-    Context context;
-    List<Post> posts;
+    private Context context;
+    private List<Post> posts;
 
     public FeedAdapter(Context context, List<Post> posts) {
         this.context = context;
@@ -70,9 +70,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
                 e.printStackTrace();
             }
             tvCaption.setText(post.getDescription());
+            ivPicture.setVisibility(View.GONE);
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivPicture);
+                ivPicture.setVisibility(View.VISIBLE);
             }
         }
     }
