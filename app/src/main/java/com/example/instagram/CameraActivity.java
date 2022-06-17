@@ -1,20 +1,19 @@
 package com.example.instagram;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,21 +21,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class CameraActivity extends AppCompatActivity {
 
-    public static final String TAG = "MainActivity";
+    public static final String TAG = "CameraActivity";
 
     private Button btnLogout;
     private Button btnSubmitPicture;
@@ -68,7 +64,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_camera);
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            // Display icon in the toolbar
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setLogo(R.drawable.nav_logo_whiteout);
+        }
 
         btnLogout = findViewById(R.id.btnLogout);
         btnSubmitPicture = findViewById(R.id.btnSubmitPicture);
@@ -84,8 +91,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnSubmitPicture.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                showProgressBar();
                 String description = etDescription.getText().toString();
                 if (description.isEmpty()) {
                     Log.i(TAG, "Description cannot be empty");
@@ -104,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 photoFile = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
 
                 // wrapping File object into a content provider
-                Uri fileProvider = FileProvider.getUriForFile(MainActivity.this, "com.example.instagram.fileprovider", photoFile);
+                Uri fileProvider = FileProvider.getUriForFile(CameraActivity.this, "com.example.instagram.fileprovider", photoFile);
 
                 // launch intent to open camera
                 resultLauncher.launch(fileProvider);
@@ -130,8 +139,9 @@ public class MainActivity extends AppCompatActivity {
                         ex.printStackTrace();
                     }
                     etDescription.setText("");
-                    Log.i(TAG, "post saved!");
                     hideProgressBar();
+                    Toast.makeText(CameraActivity.this, "Post created!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(CameraActivity.this, FeedActivity.class));
                 } else {
                     Log.e(TAG, "Unable to save post");
                 }
@@ -142,8 +152,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         progressBar = menu.findItem(R.id.progressBar);
-        showProgressBar();
         return super.onPrepareOptionsMenu(menu);
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     public void showProgressBar() {

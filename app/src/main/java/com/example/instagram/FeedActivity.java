@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,7 +110,7 @@ public class FeedActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.miPost) {
-            startActivity(new Intent(FeedActivity.this, MainActivity.class));
+            startActivity(new Intent(FeedActivity.this, CameraActivity.class));
         }
         return false;
     }

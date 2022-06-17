@@ -4,15 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
@@ -47,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void done(ParseUser user, ParseException e) {
                         if (e == null) {
-                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent i = new Intent(LoginActivity.this, CameraActivity.class);
                             startActivity(i);
                         } else {
                             Log.e(TAG, "Unable to log in");
