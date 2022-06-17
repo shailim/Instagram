@@ -20,6 +20,13 @@
         android:icon="@drawable/direct"
         app:showAsAction="always"
         android:title="Direct">
-
     </item>
+
+    <item
+        android:id="@+id/progressBar"
+        android:orderInCategory="100"
+        android:title="Loading..."
+        android:visible="false"
+        app:showAsAction="always"
+        app:actionLayout="@layout/action_view_progress"/>
 </menu>

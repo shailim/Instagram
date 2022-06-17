@@ -72,6 +72,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
         ImageView ivProfilePic;
         String username = "";
         String date;
+        ParseUser user;
+        ParseFile profilePic;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,15 +91,35 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             //for each post, we set the data
             try {
                 // username is only working if i use fetch() ??
-                username = post.getUser().fetch().getUsername();
+                user = post.getUser().fetch();
+                username = user.getUsername();
+                profilePic = user.getParseFile("profile_pic");
                 tvUsername.setText(username);
             } catch (ParseException e) {
                 e.printStackTrace();
                 tvUsername.setText("Loading...");
             }
 
+            String url = "";
+            if (profilePic != null) {
+                url = profilePic.getUrl();
+            }
+            Glide.with(context).load(url)
+                    .placeholder(R.drawable.placeholder)
+                    .circleCrop()
+                    .into(ivProfilePic);
+
             // should clean up and put all the onClickListeners in another function
             tvUsername.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra("user", post.getUser());
+                    context.startActivity(intent);
+                }
+            });
+
+            ivProfilePic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ProfileActivity.class);
@@ -132,26 +154,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
                     }
                 });
             }
-
-            ParseFile profilePic = post.getProfilePic();
-            if (profilePic != null) {
-                Glide.with(context).load(profilePic.getUrl())
-                        .placeholder(R.drawable.placeholder)
-                        .circleCrop()
-                        .into(ivProfilePic);
-            } else {
-                Glide.with(context).load(R.drawable.placeholder)
-                        .circleCrop()
-                        .into(ivProfilePic);
-            }
-            ivProfilePic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ProfileActivity.class);
-                    intent.putExtra("user", post.getUser());
-                    context.startActivity(intent);
-                }
-            });
 
             // listening if the post is liked
             ibLike.setOnClickListener(new View.OnClickListener() {

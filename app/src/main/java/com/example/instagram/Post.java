@@ -17,7 +17,6 @@ public class Post extends ParseObject {
     public static final String IMAGE = "image";
     public static final String USER = "user";
     public static final String LIKES = "likes";
-    public static final String PROFILE_PIC = "profilePic";
     public static final String USERID = "userId";
 
     public Post() {}
@@ -36,8 +35,6 @@ public class Post extends ParseObject {
 
     public JSONArray getLikes() { return getJSONArray(LIKES); }
 
-    public ParseFile getProfilePic() { return getParseFile(PROFILE_PIC); }
-
     public String getUserid() { return getString(USERID); }
 
     public void setDescription(String description) {
@@ -51,8 +48,6 @@ public class Post extends ParseObject {
     }
 
     public void setLikes(JSONArray list) { put(LIKES, list); }
-
-    public void setProfilePic(ParseFile image) { put(PROFILE_PIC, image); }
 
     public void setUserid(String id) { put(USERID, id); }
 }

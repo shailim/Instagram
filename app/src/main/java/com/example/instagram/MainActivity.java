@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnTakePicture;
     private File photoFile;
     private ImageView ivPreview;
+    private MenuItem progressBar;
 
     ActivityResultLauncher<Uri> resultLauncher = registerForActivityResult(
             new ActivityResultContracts.TakePicture(),
@@ -121,12 +124,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                     etDescription.setText("");
                     Log.i(TAG, "post saved!");
+                    hideProgressBar();
                 } else {
                     Log.e(TAG, "Unable to save post");
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        progressBar = menu.findItem(R.id.progressBar);
+        showProgressBar();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        progressBar.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        progressBar.setVisible(false);
     }
 }

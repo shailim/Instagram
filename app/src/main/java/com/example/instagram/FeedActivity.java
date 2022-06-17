@@ -71,6 +71,10 @@ public class FeedActivity extends AppCompatActivity {
 
     public void queryPosts(SwipeRefreshLayout sw) {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+
+        ParseQuery<User> query2 = ParseQuery.getQuery(User.class);
+        query2.whereMatchesQuery("userId", query);
+        query2.include("userId");
         //limit of 20 posts
         query.setLimit(20);
         //getting newest posts first
@@ -79,6 +83,8 @@ public class FeedActivity extends AppCompatActivity {
             @Override
             public void done(List<Post> parsePosts, ParseException e) {
                 if (parsePosts != null) {
+                    Log.i(TAG, parsePosts.get(0).toString());
+                    Log.i(TAG, "got posts");
                     posts.clear();
                     posts.addAll(parsePosts);
                     //post list changed so let adapter know so it can refresh views

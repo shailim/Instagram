@@ -14,6 +14,7 @@ public class InstagramApplication extends Application {
         super.onCreate();
 
         ParseObject.registerSubclass(Post.class);
+        ParseObject.registerSubclass(User.class);
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
