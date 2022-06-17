@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +112,10 @@ public class FeedActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.miPost) {
             startActivity(new Intent(FeedActivity.this, CameraActivity.class));
+        } else if (item.getItemId() == R.id.logoutBtn) {
+            ParseUser.logOut();
+            Log.i("Logout", String.valueOf(ParseUser.getCurrentUser()));
+            startActivity(new Intent(this, LoginActivity.class));
         }
         return false;
     }

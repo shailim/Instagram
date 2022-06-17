@@ -8,10 +8,10 @@
     </item>
 
     <item
-        android:id="@+id/miHeart"
-        android:icon="@drawable/ufi_heart"
+        android:id="@+id/miHome"
+        android:icon="@drawable/instagram_home_outline_24"
         app:showAsAction="always"
-        android:title="Heart">
+        android:title="Home">
 
     </item>
 
@@ -21,6 +21,11 @@
         app:showAsAction="always"
         android:title="Direct">
     </item>
+
+    <item
+        android:id="@+id/logoutBtn"
+        android:title="Logout"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/progressBar"

@@ -3,6 +3,7 @@ package com.example.instagram;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
@@ -34,7 +35,6 @@ public class CameraActivity extends AppCompatActivity {
 
     public static final String TAG = "CameraActivity";
 
-    private Button btnLogout;
     private Button btnSubmitPicture;
     private EditText etDescription;
     private Button btnTakePicture;
@@ -77,18 +77,9 @@ public class CameraActivity extends AppCompatActivity {
             getSupportActionBar().setLogo(R.drawable.nav_logo_whiteout);
         }
 
-        btnLogout = findViewById(R.id.btnLogout);
         btnSubmitPicture = findViewById(R.id.btnSubmitPicture);
         etDescription = findViewById(R.id.etDescription);
         btnTakePicture = findViewById(R.id.btnTakePicture);
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ParseUser.logOut();
-                Log.i("Logout", String.valueOf(ParseUser.getCurrentUser()));
-            }
-        });
 
         btnSubmitPicture.setOnClickListener(new View.OnClickListener() {
 
@@ -161,6 +152,18 @@ public class CameraActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.miHome) {
+            startActivity(new Intent(this, FeedActivity.class));
+        } else if (item.getItemId() == R.id.logoutBtn) {
+            ParseUser.logOut();
+            Log.i("Logout", String.valueOf(ParseUser.getCurrentUser()));
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        return false;
     }
 
     public void showProgressBar() {
