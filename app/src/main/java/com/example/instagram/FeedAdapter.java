@@ -1,6 +1,8 @@
 package com.example.instagram;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 
+import java.util.Date;
 import java.util.List;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
@@ -78,19 +82,60 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivPicture);
                 ivPicture.setVisibility(View.VISIBLE);
+
+                // clicking on the image opens up the post detail view
+                ivPicture.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // pass in the data through intent
+                        Intent i = new Intent(context, PostDetailActivity.class);
+                        i.putExtra("username", username);
+                        i.putExtra("caption", post.getDescription());
+                        i.putExtra("image", image);
+
+                        //formatting the date
+                        String date = calculateTimeAgo(post.getCreatedAt());
+                        i.putExtra("date", date);
+                        context.startActivity(i);
+                    }
+                });
             }
         }
     }
 
-    // clearing all posts from recycler
-    public void clear() {
-        posts.clear();
-        notifyDataSetChanged();
-    }
+    public static String calculateTimeAgo(Date createdAt) {
 
-    // Add a new list of posts
-    public void addAll(List<Post> list) {
-        posts.addAll(list);
-        notifyDataSetChanged();
+        int SECOND_MILLIS = 1000;
+        int MINUTE_MILLIS = 60 * SECOND_MILLIS;
+        int HOUR_MILLIS = 60 * MINUTE_MILLIS;
+        int DAY_MILLIS = 24 * HOUR_MILLIS;
+
+        try {
+            createdAt.getTime();
+            long time = createdAt.getTime();
+            long now = System.currentTimeMillis();
+
+            final long diff = now - time;
+            if (diff < MINUTE_MILLIS) {
+                return "just now";
+            } else if (diff < 2 * MINUTE_MILLIS) {
+                return "a minute ago";
+            } else if (diff < 50 * MINUTE_MILLIS) {
+                return diff / MINUTE_MILLIS + " m";
+            } else if (diff < 90 * MINUTE_MILLIS) {
+                return "an hour ago";
+            } else if (diff < 24 * HOUR_MILLIS) {
+                return diff / HOUR_MILLIS + " h";
+            } else if (diff < 48 * HOUR_MILLIS) {
+                return "yesterday";
+            } else {
+                return diff / DAY_MILLIS + " d";
+            }
+        } catch (Exception e) {
+            Log.i("Error:", "getRelativeTimeAgo failed", e);
+            e.printStackTrace();
+        }
+
+        return "";
     }
 }
