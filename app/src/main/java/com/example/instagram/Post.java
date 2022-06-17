@@ -5,7 +5,10 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+
 import java.io.File;
+import java.util.ArrayList;
 
 @ParseClassName("Post")
 public class Post extends ParseObject {
@@ -13,6 +16,8 @@ public class Post extends ParseObject {
     public static final String DESCRIPTION = "description";
     public static final String IMAGE = "image";
     public static final String USER = "user";
+    public static final String LIKES = "likes";
+    public static final String PROFILE_PIC = "profilePic";
 
     public Post() {}
 
@@ -28,15 +33,21 @@ public class Post extends ParseObject {
         return getParseUser(USER);
     }
 
+    public JSONArray getLikes() { return getJSONArray(LIKES); }
+
+    public ParseFile getProfilePic() { return getParseFile(PROFILE_PIC); }
+
     public void setDescription(String description) {
         put(DESCRIPTION, description);
     }
 
-    public void setImage(ParseFile image) {
-        put(IMAGE, image);
-    }
+    public void setImage(ParseFile image) { put(IMAGE, image); }
 
     public void setUser(ParseUser user) {
         put(USER, user);
     }
+
+    public void setLikes(JSONArray list) { put(LIKES, list); }
+
+    public void setProfilePic(ParseFile image) { put(PROFILE_PIC, image); }
 }

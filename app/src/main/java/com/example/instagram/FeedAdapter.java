@@ -2,13 +2,16 @@ package com.example.instagram;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +19,14 @@ import com.bumptech.glide.Glide;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +67,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
         ImageView ivPicture;
         TextView tvCaption;
         TextView tvDate;
+        ImageButton ibLike;
+        ImageButton ibComment;
+        ImageView ivProfilePic;
         String username = "";
         String date;
 
@@ -67,6 +80,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             ivPicture = itemView.findViewById(R.id.ivPicture);
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvDate = itemView.findViewById(R.id.tvDate);
+            ibLike = itemView.findViewById(R.id.ibLike);
+            ibComment = itemView.findViewById(R.id.ibComment);
+            ivProfilePic = itemView.findViewById(R.id.ivProfilePic);
         }
 
         public void bind(Post post) {
@@ -105,6 +121,36 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
                     }
                 });
             }
+
+            ParseFile profilePic = post.getProfilePic();
+            if (profilePic != null) {
+                Glide.with(context).load(profilePic.getUrl())
+                        .placeholder(R.drawable.placeholder)
+                        .circleCrop()
+                        .into(ivProfilePic);
+            } else {
+                Glide.with(context).load(R.drawable.placeholder)
+                        .circleCrop()
+                        .into(ivProfilePic);
+            }
+
+            // listening if the post is liked
+            ibLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    JSONArray list = post.getLikes();
+                    list.put(ParseUser.getCurrentUser().getObjectId());
+                    post.setLikes(list);
+                    post.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                // change heart icon to the active version
+                            }
+                        }
+                    });
+                }
+            });
         }
     }
 
