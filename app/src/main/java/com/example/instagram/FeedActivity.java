@@ -3,6 +3,8 @@ package com.example.instagram;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -45,6 +48,7 @@ public class FeedActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setLogo(R.drawable.nav_logo_whiteout);
         }
+
 
         // find the recycler view and swipe container
         rvFeed = findViewById(R.id.rvFeed);
@@ -101,22 +105,22 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     // Menu icons are inflated just as they were with actionbar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.miPost) {
-            startActivity(new Intent(FeedActivity.this, CameraActivity.class));
-        } else if (item.getItemId() == R.id.logoutBtn) {
-            ParseUser.logOut();
-            Log.i("Logout", String.valueOf(ParseUser.getCurrentUser()));
-            startActivity(new Intent(this, LoginActivity.class));
-        }
-        return false;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        if (item.getItemId() == R.id.miPost) {
+//            startActivity(new Intent(FeedActivity.this, CameraActivity.class));
+//        } else if (item.getItemId() == R.id.logoutBtn) {
+//            ParseUser.logOut();
+//            Log.i("Logout", String.valueOf(ParseUser.getCurrentUser()));
+//            startActivity(new Intent(this, LoginActivity.class));
+//        }
+//        return false;
+//    }
 }

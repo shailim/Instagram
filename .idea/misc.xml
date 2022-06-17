@@ -12,14 +12,18 @@
         <entry key="app/src/main/res/layout/action_view_progress.xml" value="0.2760416666666667" />
         <entry key="app/src/main/res/layout/activity_feed.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.27708333333333335" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.27708333333333335" />
         <entry key="app/src/main/res/layout/feed_post.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_post.xml" value="0.27708333333333335" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.27708333333333335" />
         <entry key="app/src/main/res/layout/grid_item.xml" value="0.2760416666666667" />
         <entry key="app/src/main/res/layout/login.xml" value="0.2760416666666667" />
         <entry key="app/src/main/res/layout/post_detail.xml" value="0.2760416666666667" />
+        <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.2760416666666667" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
