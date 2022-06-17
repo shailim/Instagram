@@ -95,6 +95,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
                 e.printStackTrace();
                 tvUsername.setText("Loading...");
             }
+
+            // should clean up and put all the onClickListeners in another function
+            tvUsername.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra("user", post.getUser());
+                    context.startActivity(intent);
+                }
+            });
+
             tvCaption.setText(username + " " + post.getDescription());
 
             // formatting date
@@ -133,6 +144,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
                         .circleCrop()
                         .into(ivProfilePic);
             }
+            ivProfilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProfileActivity.class);
+                    intent.putExtra("user", post.getUser());
+                    context.startActivity(intent);
+                }
+            });
 
             // listening if the post is liked
             ibLike.setOnClickListener(new View.OnClickListener() {
