@@ -13,6 +13,7 @@
         android:paddingStart="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,10 +36,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
-        android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/ivPicture"
+        android:paddingBottom="10dp"
+        android:textColor="#000000"
+        android:textSize="15sp"
+        app:layout_constraintTop_toBottomOf="@+id/layoutForBtns"
         tools:text="caption" />
 
     <TextView
@@ -47,11 +49,58 @@
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:textColor="#0C0C0C"
         android:textSize="15sp"
         app:layout_constraintTop_toBottomOf="@+id/tvCaption"
-        tools:layout_editor_absoluteX="135dp"
         tools:text="June 16" />
+
+    <LinearLayout
+        android:id="@+id/layoutForBtns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/ivPicture"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp" >
+
+        <ImageButton
+            android:id="@+id/ibLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            app:srcCompat="@drawable/ufi_heart" />
+
+        <ImageButton
+            android:id="@+id/ibComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:paddingStart="10dp"
+            app:srcCompat="@drawable/ufi_comment" />
+
+        <ImageButton
+            android:id="@+id/ibShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:paddingStart="10dp"
+            app:srcCompat="@drawable/direct" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/ibSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00FFFFFF"
+            android:paddingEnd="20dp"
+            app:tint="#040303"
+            app:srcCompat="@drawable/ufi_save" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

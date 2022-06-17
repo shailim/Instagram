@@ -6,4 +6,20 @@
         app:showAsAction="always"
         android:title="Post">
     </item>
+
+    <item
+        android:id="@+id/miHeart"
+        android:icon="@drawable/ufi_heart"
+        app:showAsAction="always"
+        android:title="Heart">
+
+    </item>
+
+    <item
+        android:id="@+id/miDirect"
+        android:icon="@drawable/direct"
+        app:showAsAction="always"
+        android:title="Direct">
+
+    </item>
 </menu>

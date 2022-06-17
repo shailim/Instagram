@@ -56,7 +56,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
         TextView tvUsername;
         ImageView ivPicture;
         TextView tvCaption;
+        TextView tvDate;
         String username = "";
+        String date;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +66,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             tvUsername = itemView.findViewById(R.id.tvUsername);
             ivPicture = itemView.findViewById(R.id.ivPicture);
             tvCaption = itemView.findViewById(R.id.tvCaption);
+            tvDate = itemView.findViewById(R.id.tvDate);
         }
 
         public void bind(Post post) {
@@ -77,6 +80,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
                 tvUsername.setText("Loading...");
             }
             tvCaption.setText(username + " " + post.getDescription());
+
+            // formatting date
+            date = calculateTimeAgo(post.getCreatedAt());
+            tvDate.setText(date);
+
             ivPicture.setVisibility(View.GONE);
             ParseFile image = post.getImage();
             if (image != null) {
@@ -92,9 +100,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
                         i.putExtra("username", username);
                         i.putExtra("caption", post.getDescription());
                         i.putExtra("image", image);
-
-                        //formatting the date
-                        String date = calculateTimeAgo(post.getCreatedAt());
                         i.putExtra("date", date);
                         context.startActivity(i);
                     }
